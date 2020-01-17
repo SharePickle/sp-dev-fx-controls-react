@@ -471,7 +471,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
                        id="bullet-propertyPaneButton"
                        calloutProps={{ gapSpace: 0 }}>
             <IconButton checked={this.state.formats!.list === 'bullet'}
-                        onClick={() => this.applyFormat('list', 'bullet')}
+                        onClick={() => this.onChangeList('bullet')}
                         className={styles.propertyPaneButton}
                         aria-describedby="bullet-propertyPaneButton"
                         iconProps={{
@@ -486,7 +486,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
                        id="ordered-propertyPaneButton"
                        calloutProps={{ gapSpace: 0 }}>
             <IconButton checked={this.state.formats!.list === 'ordered'}
-                        onClick={() => this.applyFormat('list', 'ordered')}
+                        onClick={() => this.onChangeList('ordered')}
                         className={styles.propertyPaneButton}
                         aria-describedby="ordered-propertyPaneButton"
                         iconProps={{
@@ -556,6 +556,12 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    */
   private handleHighlightColorChanged = (color: string) => {
     this.applyFormat('background', color);
+  }
+
+  private onChangeList = (key: 'bullet' | 'ordered'): void => {
+    // if we're already in list mode, toggle off
+    const newAlignValue = (key === this.state.formats.list ? false : key);
+    this.applyFormat("list", newAlignValue);
   }
 
   /**
